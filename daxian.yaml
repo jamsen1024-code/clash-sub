@@ -1,0 +1,29 @@
+proxies:
+  - name: vmess-node-01
+    type: vmess
+    server: 172.210.53.224
+    port: 3306
+    uuid: c5311a0f-5177-4849-82d5-d66f3ce8359c
+    alterId: 0
+    cipher: auto
+    network: ws
+    ws-opts:
+      path: /c5311a0f-5177-4849-82d5-d66f3ce8359c-vm
+      headers:
+        Host: www.bing.com
+
+proxy-groups:
+  - name: PROXY
+    type: select
+    proxies:
+      - vmess-node-01
+
+  - name: AUTO
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+      - vmess-node-01
+
+rules:
+  - MATCH,PROXY
