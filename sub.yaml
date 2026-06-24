@@ -1,41 +1,24 @@
-{
-  "log": {
-    "loglevel": "warning"
-  },
-  "inbounds": [
-    {
-      "port": 443,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "446e031d-334a-4a69-9519-5405a9a82eed",
-            "flow": "xtls-rprx-vision"
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "reality",
-        "realitySettings": {
-          "show": false,
-          "dest": "www.microsoft.com:443",
-          "xver": 0,
-          "serverNames": [
-            "www.microsoft.com"
-          ],
-          "privateKey": "aAQvQQ2TtlxxAwkc1i5JK6eQ2c8sMr-ww0fmRK-GMHU",
-          "shortIds": [
-            "a1b2c3d4"
-          ]
-        }
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom"
-    }
-  ]
-}
+proxies:
+  - name: VPS-Reality
+    type: vless
+    server: 128.1.48.237
+    port: 443
+    uuid: 446e031d-334a-4a69-9519-5405a9a82eed
+    flow: xtls-rprx-vision
+    network: tcp
+    tls: true
+    udp: true
+    servername: www.microsoft.com
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: 090Kc8y9SxnlWG72DGV2XrNHvYVo4jdFDVBbKCFSpF0
+      short-id: a1b2c3d4
+
+proxy-groups:
+  - name: PROXY
+    type: select
+    proxies:
+      - VPS-Reality
+
+rules:
+  - MATCH,PROXY
